@@ -47,7 +47,11 @@ export default function Home() {
           </div>
           
           <div className="h-80 bg-zinc-800 rounded-xl flex items-center justify-center text-zinc-500 border border-zinc-700/50">
-            [ مكان صورة الغلاف الرئيسية ]
+            [ <img 
+  src="https://i.pinimg.com/736x/8b/83/dc/8b83dcf6183ba4daedfed5d0ab3eea6b.jpg" 
+  alt="Cover Image" 
+  className="w-full h-full object-cover rounded-xl"
+/>]
           </div>
         </section>
 
