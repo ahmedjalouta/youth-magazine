@@ -7,9 +7,17 @@ export default function Home() {
         
         <div className="flex gap-6 items-center text-sm text-zinc-400">
           <div className="flex gap-4">
-            <a href="#" className="hover:text-white">Instagram</a>
-            <a href="#" className="hover:text-white">X</a>
-            <a href="#" className="hover:text-white">TikTok</a>
+  <a 
+    href="https://www.instagram.com/liby.anyouth"
+
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="hover:text-white"
+  >
+    Instagram
+  </a>
+  
+
           </div>
           <button className="border border-zinc-700 px-3 py-1 rounded-full text-xs text-white hover:bg-zinc-800">
             EN / عربي
