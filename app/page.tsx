@@ -23,7 +23,7 @@ export default function Home() {
           <li className="hover:text-white cursor-pointer transition">NEWS</li>
           <li className="hover:text-white cursor-pointer transition">CULTURE</li>
           <li className="hover:text-white cursor-pointer transition">FASHION</li>
-          <li className="hover:text-white cursor-pointer transition">TECH</li>
+          <li className="hover:text-white curحفزة لقراءة القصة كاملة...sor-pointer transition">TECH</li>
           <li className="hover:text-white cursor-pointer transition">LIFESTYLE</li>
           <li className="hover:text-white cursor-pointer transition">SPORTS</li>
           <li className="hover:text-white cursor-pointer transition">OPINIONS</li>
@@ -39,10 +39,10 @@ export default function Home() {
               from youth to youth
             </h1>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              وصف قصير للمقال الرئيسي يعطي القارئ لمحة سريعة ومحفزة لقراءة القصة كاملة...
+            stay tuned 
             </p>
             <button className="bg-white text-black font-bold px-6 py-3 rounded-xl hover:bg-zinc-200 transition text-sm mt-4">
-              Read the story ←
+              stay tuned
             </button>
           </div>
           
@@ -61,15 +61,15 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-zinc-900/50 p-5 rounded-xl border border-zinc-800 space-y-2">
               <span className="text-xs text-zinc-500">#1 FASHION</span>
-              <h3 className="font-bold">عنوان المقال الشائع الأول</h3>
+              <h3 className="font-bold">youth magazine</h3>
             </div>
             <div className="bg-zinc-900/50 p-5 rounded-xl border border-zinc-800 space-y-2">
               <span className="text-xs text-zinc-500">#2 TECH</span>
-              <h3 className="font-bold">عنوان المقال الشائع الثاني</h3>
+              <h3 className="font-bold">youth magazine</h3>
             </div>
             <div className="bg-zinc-900/50 p-5 rounded-xl border border-zinc-800 space-y-2">
               <span className="text-xs text-zinc-500">#3 VOICES</span>
-              <h3 className="font-bold">عنوان المقال الشائع الثالث</h3>
+              <h3 className="font-bold">youth magazine</h3>
             </div>
           </div>
         </section>
