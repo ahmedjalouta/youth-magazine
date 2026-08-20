@@ -36,7 +36,7 @@ export default function Home() {
           <div className="space-y-4">
             <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold">CULTURE • FEATURED</span>
             <h1 className="text-3xl md:text-5xl font-black leading-tight">
-             hello
+             from youth to youth
             </h1>
             <p className="text-zinc-400 text-sm leading-relaxed">
               وصف قصير للمقال الرئيسي يعطي القارئ لمحة سريعة ومحفزة لقراءة القصة كاملة...
@@ -48,7 +48,7 @@ export default function Home() {
           
           <div className="h-80 bg-zinc-800 rounded-xl flex items-center justify-center text-zinc-500 border border-zinc-700/50">
             [ <img 
-  src="https://i.pinimg.com/736x/8b/83/dc/8b83dcf6183ba4daedfed5d0ab3eea6b.jpg" 
+  src="c:\Users\godgo\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\FB864979FE3087C6A3311D8F2788A549DAE26EAE\transfers\2026-34\WhatsApp Image 2026-08-19 at 7.24.18 PM.jpeg" 
   alt="Cover Image" 
   className="w-full h-full object-cover rounded-xl"
 />]
