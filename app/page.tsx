@@ -3,7 +3,8 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [lang, setLang] = useState<"ar" | "en">("ar");
+  // تم تغيير اللغة الافتراضية هنا إلى 'en' لتبدأ الصفحة بالإنجليزية فوراً
+  const [lang, setLang] = useState<"ar" | "en">("en");
 
   const content = {
     ar: {
