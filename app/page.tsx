@@ -1,20 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
   
-  // 1. حالات التفاعلية المضافة (إدخال البريد الإلكتروني والإعجابات والنافذة المنبثقة)
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [activeStory, setActiveStory] = useState<string | null>(null);
+
+  // 1. استرجاع الإعجابات والحالة عند تحميل الصفحة من LocalStorage
   const [likes, setLikes] = useState<{ [key: string]: number }>({
     trending1: 124,
     trending2: 89,
     trending3: 215,
   });
+
+  useEffect(() => {
+    const savedLikes = localStorage.getItem("lym_likes");
+    if (savedLikes) {
+      setLikes(JSON.parse(savedLikes));
+    }
+    const savedSub = localStorage.getItem("lym_subscribed");
+    if (savedSub) {
+      setSubscribed(true);
+    }
+  }, []);
 
   const content = {
     ar: {
@@ -34,7 +46,7 @@ export default function Home() {
       newsletterTitle: "اشترك في النشرة الورقية الرقمية",
       newsletterDesc: "احصل على أحدث القصص والمقالات الحصرية أسبوعياً في صندوق بريدك.",
       subscribeBtn: "اشتراك",
-      subscribedSuccess: "تم الاشتراك بنجاح! مرحباً بك في مجتمع LYM.",
+      subscribedSuccess: "تم الاشتراك بنجاح! تم حفظ بريدك وحساب إعجاباتك.",
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
       timeRead: "دقائق قراءة",
@@ -57,7 +69,7 @@ export default function Home() {
       newsletterTitle: "JOIN THE LYM GAZETTE",
       newsletterDesc: "Get curations of our best stories, interviews, and features delivered to your inbox every week.",
       subscribeBtn: "SUBSCRIBE",
-      subscribedSuccess: "Thank you for subscribing! Welcome to LYM.",
+      subscribedSuccess: "Thank you for subscribing! Your preference is saved.",
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
       timeRead: "min read",
@@ -71,33 +83,40 @@ export default function Home() {
     setLang((prev) => (prev === "ar" ? "en" : "ar"));
   };
 
+  // 2. حفظ الإيميل والاشتراك دائماً حتى بعد التحديث
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim() !== "") {
       setSubscribed(true);
+      localStorage.setItem("lym_subscribed", "true");
+      // يمكن حفظ الإيميل محلياً أو إرساله لخدمة بريدية
+      localStorage.setItem("lym_user_email", email);
       setEmail("");
     }
   };
 
+  // 3. حفظ عدد الإعجابات في LocalStorage لكي لا تضيع بعد التحديث
   const handleLike = (id: string) => {
-    setLikes((prev) => ({ ...prev, [id]: prev[id] + 1 }));
+    const updatedLikes = { ...likes, [id]: likes[id] + 1 };
+    setLikes(updatedLikes);
+    localStorage.setItem("lym_likes", JSON.stringify(updatedLikes));
   };
 
   return (
     <div
-      className={`min-h-screen bg-[#EFECE6] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white ${
+      className={`min-h-screen bg-[#EAE4D9] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white ${
         t.dir === "rtl" ? "dir-rtl" : "dir-ltr"
       }`}
       dir={t.dir}
     >
       {/* 1. HEADER */}
-      <header className="border-b-2 border-[#2B2825] px-6 py-6 max-w-7xl mx-auto flex justify-between items-center bg-[#EFECE6]">
+      <header className="border-b-2 border-[#2B2825] px-6 py-6 max-w-7xl mx-auto flex justify-between items-center bg-[#EAE4D9]">
         <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#DCD7CE] group-hover:bg-[#7A2821] group-hover:text-white transition-all">
+          <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#D5CDBF] group-hover:bg-[#7A2821] group-hover:text-white transition-all">
             LYM
           </div>
           <div>
-            <h1 className="text-2xl md:text-4xl font-black tracking-widest uppercase font-serif leading-none">
+            <h1 className="text-2xl md:text-4xl font-black tracking-widest uppercase font-serif leading-none text-[#2B2825]">
               YOUTH MAG
             </h1>
             <span className="text-[10px] uppercase font-sans tracking-widest text-[#6B655F]">
@@ -111,14 +130,14 @@ export default function Home() {
             href="https://www.instagram.com/liby.anyouth"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#7A2821] transition-colors underline underline-offset-4 decoration-1"
+            className="hover:text-[#7A2821] transition-colors underline underline-offset-4 decoration-1 text-[#2B2825]"
           >
             Instagram
           </a>
 
           <button
             onClick={toggleLanguage}
-            className="border-2 border-[#2B2825] px-4 py-1 bg-[#E8E3D9] hover:bg-[#2B2825] hover:text-white transition-all font-sans font-bold shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+            className="border-2 border-[#2B2825] px-4 py-1 bg-[#D5CDBF] hover:bg-[#2B2825] hover:text-[#EAE4D9] transition-all font-sans font-bold shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
           >
             {t.btnText}
           </button>
@@ -126,7 +145,7 @@ export default function Home() {
       </header>
 
       {/* 2. NAVIGATION */}
-      <nav className="border-b-2 border-[#2B2825] bg-[#E8E3D9] sticky top-0 z-40">
+      <nav className="border-b-2 border-[#2B2825] bg-[#D5CDBF] sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4">
           <ul className="flex justify-start md:justify-center gap-6 md:gap-8 text-xs font-sans font-black tracking-widest text-[#4A4540] overflow-x-auto py-3">
             {t.nav.map((item, index) => (
@@ -135,7 +154,7 @@ export default function Home() {
                 onClick={() => setActiveTab(index)}
                 className={`cursor-pointer transition-all whitespace-nowrap uppercase px-3 py-1 border border-transparent ${
                   activeTab === index
-                    ? "bg-[#2B2825] text-[#EFECE6] font-bold"
+                    ? "bg-[#2B2825] text-[#EAE4D9] font-bold"
                     : "hover:border-[#2B2825] hover:text-[#7A2821]"
                 }`}
               >
@@ -149,13 +168,13 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
         {/* 3. HERO SECTION */}
-        <section className="border-2 border-[#2B2825] bg-[#F5F2EC] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
+        <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-7 space-y-5">
-            <span className="inline-block px-3 py-1 border border-[#2B2825] bg-[#E8E3D9] text-[#7A2821] text-xs font-sans font-bold uppercase tracking-wider">
+            <span className="inline-block px-3 py-1 border border-[#2B2825] bg-[#D5CDBF] text-[#7A2821] text-xs font-sans font-bold uppercase tracking-wider">
               {t.heroCategory}
             </span>
 
-            <h2 className="text-3xl md:text-5xl font-black leading-tight tracking-tight text-[#1A1816]">
+            <h2 className="text-3xl md:text-5xl font-black leading-tight tracking-tight text-[#2B2825]">
               {t.heroTitle}
             </h2>
 
@@ -166,7 +185,7 @@ export default function Home() {
             <div className="pt-2 flex items-center gap-4">
               <button
                 onClick={() => setActiveStory(t.heroTitle)}
-                className="bg-[#2B2825] text-white font-sans font-bold px-6 py-3 border-2 border-[#2B2825] hover:bg-[#7A2821] transition-all text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#7A2821] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                className="bg-[#2B2825] text-[#EAE4D9] font-sans font-bold px-6 py-3 border-2 border-[#2B2825] hover:bg-[#7A2821] hover:text-white transition-all text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#7A2821] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
               >
                 {t.readStory}
               </button>
@@ -205,7 +224,7 @@ export default function Home() {
             ].map((item) => (
               <article
                 key={item.id}
-                className="border-2 border-[#2B2825] bg-[#F5F2EC] p-5 shadow-[4px_4px_0px_0px_#2B2825] hover:-translate-y-1 transition-all flex flex-col justify-between space-y-4"
+                className="border-2 border-[#2B2825] bg-[#DFD7C8] p-5 shadow-[4px_4px_0px_0px_#2B2825] hover:-translate-y-1 transition-all flex flex-col justify-between space-y-4"
               >
                 <div
                   className="space-y-2 cursor-pointer"
@@ -214,15 +233,15 @@ export default function Home() {
                   <span className="text-xs font-sans font-bold text-[#7A2821] block">
                     {item.tag}
                   </span>
-                  <h4 className="font-bold text-lg leading-snug hover:underline">
+                  <h4 className="font-bold text-lg leading-snug hover:underline text-[#2B2825]">
                     {item.title}
                   </h4>
                 </div>
 
-                <div className="flex justify-between items-center pt-3 border-t border-[#DCD7CE] text-xs font-sans">
+                <div className="flex justify-between items-center pt-3 border-t border-[#C3B9A8] text-xs font-sans">
                   <button
                     onClick={() => handleLike(item.id)}
-                    className="flex items-center gap-1 text-[#7A2821] hover:bg-[#E8E3D9] px-2 py-1 rounded transition-colors font-bold"
+                    className="flex items-center gap-1 text-[#7A2821] hover:bg-[#D5CDBF] px-2 py-1 rounded transition-colors font-bold"
                   >
                     ♥ {likes[item.id]} {t.like}
                   </button>
@@ -239,7 +258,7 @@ export default function Home() {
         </section>
 
         {/* 5. NEWSLETTER SECTION */}
-        <section className="border-2 border-[#2B2825] bg-[#E8E3D9] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
+        <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
             {t.newsletterTitle}
           </h3>
@@ -248,7 +267,7 @@ export default function Home() {
           </p>
 
           {subscribed ? (
-            <div className="p-4 border-2 border-[#2B2825] bg-[#7A2821] text-white font-sans font-bold text-sm animate-fade-in max-w-md mx-auto">
+            <div className="p-4 border-2 border-[#2B2825] bg-[#7A2821] text-white font-sans font-bold text-sm max-w-md mx-auto">
               {t.subscribedSuccess}
             </div>
           ) : (
@@ -259,7 +278,7 @@ export default function Home() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.placeholderEmail}
-                className="border-2 border-[#2B2825] px-4 py-2.5 bg-white text-[#2B2825] placeholder-[#8C857B] font-sans text-xs flex-1 outline-none focus:bg-[#FFFDF9]"
+                className="border-2 border-[#2B2825] px-4 py-2.5 bg-[#EAE4D9] text-[#2B2825] placeholder-[#78726A] font-sans text-xs flex-1 outline-none focus:bg-[#F5F2EC]"
               />
               <button
                 type="submit"
@@ -275,7 +294,7 @@ export default function Home() {
       {/* 6. MODAL POPUP FOR READING STORIES */}
       {activeStory && (
         <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#EFECE6] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative animate-scale-up">
+          <div className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative">
             <button
               onClick={() => setActiveStory(null)}
               className="absolute top-4 right-4 text-xl font-bold font-sans border-2 border-[#2B2825] w-8 h-8 flex items-center justify-center hover:bg-[#7A2821] hover:text-white transition-colors"
@@ -285,13 +304,13 @@ export default function Home() {
             <span className="text-xs font-sans font-bold text-[#7A2821] block uppercase">
               LYM Special Feature
             </span>
-            <h3 className="text-2xl font-black font-serif">{activeStory}</h3>
+            <h3 className="text-2xl font-black font-serif text-[#2B2825]">{activeStory}</h3>
             <p className="text-sm leading-relaxed text-[#4A4540]">
               هذا النص تجريبي لعرض المقال المختار كاملاً داخل نافذة تفاعلية. يمكن ربطه لاحقاً بأي قاعدة بيانات أو مقالات حقيقية.
             </p>
             <button
               onClick={() => setActiveStory(null)}
-              className="bg-[#2B2825] text-white text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821]"
+              className="bg-[#2B2825] text-[#EAE4D9] text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821] hover:text-white"
             >
               إغلاق
             </button>
@@ -300,7 +319,7 @@ export default function Home() {
       )}
 
       {/* FOOTER */}
-      <footer className="border-t-2 border-[#2B2825] bg-[#E8E3D9] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
+      <footer className="border-t-2 border-[#2B2825] bg-[#D5CDBF] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
         <p>© {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.</p>
       </footer>
     </div>
