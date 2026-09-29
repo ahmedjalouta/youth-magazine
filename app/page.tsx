@@ -165,8 +165,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
+      {/* MAIN CONTENT */} 
+     <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
         {/* 3. HERO SECTION */}
         <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-7 space-y-5">
@@ -258,38 +258,31 @@ export default function Home() {
         </section>
 
         {/* 5. NEWSLETTER SECTION */}
-        <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
-          <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
-            {t.newsletterTitle}
-          </h3>
-          <p className="text-xs md:text-sm text-[#524D46] max-w-lg mx-auto font-sans">
-            {t.newsletterDesc}
-          </p>
-
-          {subscribed ? (
-            <div className="p-4 border-2 border-[#2B2825] bg-[#7A2821] text-white font-sans font-bold text-sm max-w-md mx-auto">
-              {t.subscribedSuccess}
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t.placeholderEmail}
-                className="border-2 border-[#2B2825] px-4 py-2.5 bg-[#EAE4D9] text-[#2B2825] placeholder-[#78726A] font-sans text-xs flex-1 outline-none focus:bg-[#F5F2EC]"
-              />
-              <button
-                type="submit"
-                className="bg-[#7A2821] text-white font-sans font-bold px-6 py-2.5 border-2 border-[#2B2825] hover:bg-[#2B2825] transition-all text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
-              >
-                {t.subscribeBtn}
-              </button>
-            </form>
-          )}
-        </section>
-      </main>
+        <form 
+  action="https://formspree.io/f/moevywbb" 
+  method="POST" 
+  onSubmit={() => {
+    setSubscribed(true);
+    localStorage.setItem("lym_subscribed", "true");
+  }}
+  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2"
+>
+  <input
+    type="email"
+    name="email"
+    required
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    placeholder={t.placeholderEmail}
+    className="border-2 border-[#2B2825] px-4 py-2.5 bg-[#EAE4D9] text-[#2B2825] placeholder-[#78726A] font-sans text-xs flex-1 outline-none focus:bg-[#F5F2EC]"
+  />
+  <button
+    type="submit"
+    className="bg-[#7A2821] text-white font-sans font-bold px-6 py-2.5 border-2 border-[#2B2825] hover:bg-[#2B2825] transition-all text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+  >
+    {t.subscribeBtn}
+  </button>
+</form>
 
       {/* 6. MODAL POPUP FOR READING STORIES */}
       {activeStory && (
