@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from "react";
 
+import { database } from "./firebase";
+
+import { ref, onValue, runTransaction } from "firebase/database";
+
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
   
