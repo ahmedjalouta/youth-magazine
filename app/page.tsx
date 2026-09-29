@@ -7,6 +7,7 @@ export default function Home() {
   
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [activeStory, setActiveStory] = useState<string | null>(null);
 
@@ -46,6 +47,7 @@ export default function Home() {
       newsletterTitle: "اشترك في النشرة الورقية الرقمية",
       newsletterDesc: "احصل على أحدث القصص والمقالات الحصرية أسبوعياً في صندوق بريدك.",
       subscribeBtn: "اشتراك",
+      submittingBtn: "جاري الإرسال...",
       subscribedSuccess: "تم الاشتراك بنجاح! تم حفظ بريدك وحساب إعجاباتك.",
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
@@ -69,6 +71,7 @@ export default function Home() {
       newsletterTitle: "JOIN THE LYM GAZETTE",
       newsletterDesc: "Get curations of our best stories, interviews, and features delivered to your inbox every week.",
       subscribeBtn: "SUBSCRIBE",
+      submittingBtn: "SENDING...",
       subscribedSuccess: "Thank you for subscribing! Your preference is saved.",
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
@@ -87,6 +90,36 @@ export default function Home() {
     const updatedLikes = { ...likes, [id]: likes[id] + 1 };
     setLikes(updatedLikes);
     localStorage.setItem("lym_likes", JSON.stringify(updatedLikes));
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://formspree.io/f/moevywbb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubscribed(true);
+        localStorage.setItem("lym_subscribed", "true");
+        setEmail("");
+      } else {
+        alert(lang === "ar" ? "حدث خطأ أثناء الإرسال. يرجى التثبت من البريد والمحاولة مجدداً." : "Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      alert(lang === "ar" ? "تعذر الاتصال بالخادم." : "Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -259,12 +292,7 @@ export default function Home() {
             </div>
           ) : (
             <form 
-              action="https://formspree.io/f/moevywbb" 
-              method="POST" 
-              onSubmit={() => {
-                setSubscribed(true);
-                localStorage.setItem("lym_subscribed", "true");
-              }}
+              onSubmit={handleNewsletterSubmit}
               className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2"
             >
               <input
@@ -278,9 +306,10 @@ export default function Home() {
               />
               <button
                 type="submit"
-                className="bg-[#7A2821] text-white font-sans font-bold px-6 py-2.5 border-2 border-[#2B2825] hover:bg-[#2B2825] transition-all text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+                disabled={isSubmitting}
+                className="bg-[#7A2821] text-white font-sans font-bold px-6 py-2.5 border-2 border-[#2B2825] hover:bg-[#2B2825] transition-all text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none disabled:opacity-50"
               >
-                {t.subscribeBtn}
+                {isSubmitting ? t.submittingBtn : t.subscribeBtn}
               </button>
             </form>
           )}
