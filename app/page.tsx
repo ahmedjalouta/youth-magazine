@@ -2,10 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-import { database } from "./firebase";
-
-import { ref, onValue, runTransaction } from "firebase/database";
-
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
   
@@ -15,18 +11,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
   const [activeStory, setActiveStory] = useState<string | null>(null);
 
-  // 1. استرجاع الإعجابات والحالة عند تحميل الصفحة من LocalStorage
-  const [likes, setLikes] = useState<{ [key: string]: number }>({
-    trending1: 124,
-    trending2: 89,
-    trending3: 215,
-  });
-
   useEffect(() => {
-    const savedLikes = localStorage.getItem("lym_likes");
-    if (savedLikes) {
-      setLikes(JSON.parse(savedLikes));
-    }
     const savedSub = localStorage.getItem("lym_subscribed");
     if (savedSub) {
       setSubscribed(true);
@@ -52,11 +37,10 @@ export default function Home() {
       newsletterDesc: "احصل على أحدث القصص والمقالات الحصرية أسبوعياً في صندوق بريدك.",
       subscribeBtn: "اشتراك",
       submittingBtn: "جاري الإرسال...",
-      subscribedSuccess: "تم الاشتراك بنجاح! تم حفظ بريدك وحساب إعجاباتك.",
+      subscribedSuccess: "تم الاشتراك بنجاح! تم حفظ بريدك الإلكتروني.",
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
       timeRead: "دقائق قراءة",
-      like: "إعجاب",
     },
     en: {
       dir: "ltr",
@@ -80,7 +64,6 @@ export default function Home() {
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
       timeRead: "min read",
-      like: "Like",
     },
   };
 
@@ -88,12 +71,6 @@ export default function Home() {
 
   const toggleLanguage = () => {
     setLang((prev) => (prev === "ar" ? "en" : "ar"));
-  };
-
-  const handleLike = (id: string) => {
-    const updatedLikes = { ...likes, [id]: likes[id] + 1 };
-    setLikes(updatedLikes);
-    localStorage.setItem("lym_likes", JSON.stringify(updatedLikes));
   };
 
   const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -248,12 +225,10 @@ export default function Home() {
             ].map((item) => (
               <article
                 key={item.id}
-                className="border-2 border-[#2B2825] bg-[#DFD7C8] p-5 shadow-[4px_4px_0px_0px_#2B2825] hover:-translate-y-1 transition-all flex flex-col justify-between space-y-4"
+                className="border-2 border-[#2B2825] bg-[#DFD7C8] p-5 shadow-[4px_4px_0px_0px_#2B2825] hover:-translate-y-1 transition-all flex flex-col justify-between space-y-4 cursor-pointer"
+                onClick={() => setActiveStory(item.title)}
               >
-                <div
-                  className="space-y-2 cursor-pointer"
-                  onClick={() => setActiveStory(item.title)}
-                >
+                <div className="space-y-2">
                   <span className="text-xs font-sans font-bold text-[#7A2821] block">
                     {item.tag}
                   </span>
@@ -262,19 +237,10 @@ export default function Home() {
                   </h4>
                 </div>
 
-                <div className="flex justify-between items-center pt-3 border-t border-[#C3B9A8] text-xs font-sans">
-                  <button
-                    onClick={() => handleLike(item.id)}
-                    className="flex items-center gap-1 text-[#7A2821] hover:bg-[#D5CDBF] px-2 py-1 rounded transition-colors font-bold"
-                  >
-                    ♥ {likes[item.id]} {t.like}
-                  </button>
-                  <button
-                    onClick={() => setActiveStory(item.title)}
-                    className="font-bold hover:text-[#7A2821]"
-                  >
-                    →
-                  </button>
+                <div className="flex justify-end items-center pt-3 border-t border-[#C3B9A8] text-xs font-sans">
+                  <span className="font-bold text-[#2B2825] hover:text-[#7A2821] transition-colors">
+                    {t.readStory} →
+                  </span>
                 </div>
               </article>
             ))}
