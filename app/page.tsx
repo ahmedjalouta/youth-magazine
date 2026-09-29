@@ -4,14 +4,25 @@ import { useState } from "react";
 
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
+  
+  // 1. حالات التفاعلية المضافة (إدخال البريد الإلكتروني والإعجابات والنافذة المنبثقة)
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeStory, setActiveStory] = useState<string | null>(null);
+  const [likes, setLikes] = useState<{ [key: string]: number }>({
+    trending1: 124,
+    trending2: 89,
+    trending3: 215,
+  });
 
   const content = {
     ar: {
       dir: "rtl",
       nav: ["الأخبار", "الثقافة", "الموضة", "التكنولوجيا", "أسلوب الحياة", "الرياضة", "الآراء"],
-      heroCategory: "الثقافة • غلاف العدد",
+      heroCategory: "LYM • غلاف العدد",
       heroTitle: "من الشباب إلى الشباب: صياغة أسلوب جيل جديد",
-      heroDesc: "منصة إعلامية مستقلة تسلط الضوء على ابتكارات الشباب، الفنون المعاصرة، والرؤى المستقبلية للمجتمع العربي والعالمي.",
+      heroDesc: "منصة إعلامية تمزج بين الأصالة التحريرية القديمة والرؤية الشبابية المعاصرة.",
       readStory: "اقرأ القصة كاملة",
       trendingTitle: "الأكثر قراءة هذا الأسبوع",
       trending1Tag: "#1 الموضة المستدامة",
@@ -20,20 +31,21 @@ export default function Home() {
       trending2Title: "مستقبل صُنّاع المحتوى في عصر خوارزميات التوليد",
       trending3Tag: "#3 أصوات شابة",
       trending3Title: "حوار خاص: الفنون المستقلة بين الهوية والعالمية",
-      editorsPicks: "مختارات المحرر",
-      newsletterTitle: "انضم إلى مجتمع YOUTH MAG",
-      newsletterDesc: "احصل على أفضل المقالات والقصص الحصرية مباشرة إلى بريدك الإلكتروني أسبوعياً.",
+      newsletterTitle: "اشترك في النشرة الورقية الرقمية",
+      newsletterDesc: "احصل على أحدث القصص والمقالات الحصرية أسبوعياً في صندوق بريدك.",
       subscribeBtn: "اشتراك",
+      subscribedSuccess: "تم الاشتراك بنجاح! مرحباً بك في مجتمع LYM.",
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
       timeRead: "دقائق قراءة",
+      like: "إعجاب",
     },
     en: {
       dir: "ltr",
       nav: ["NEWS", "CULTURE", "FASHION", "TECH", "LIFESTYLE", "SPORTS", "OPINIONS"],
-      heroCategory: "CULTURE • COVER STORY",
+      heroCategory: "LYM • COVER STORY",
       heroTitle: "FROM YOUTH TO YOUTH: SHAPING THE NEXT GENERATION",
-      heroDesc: "An independent media platform empowering youth culture, contemporary arts, and forward-thinking perspectives worldwide.",
+      heroDesc: "An independent media platform echoing vintage editorial vibes with contemporary youth perspectives.",
       readStory: "Read Full Story",
       trendingTitle: "TRENDING STORIES",
       trending1Tag: "#1 SUSTAINABLE FASHION",
@@ -42,13 +54,14 @@ export default function Home() {
       trending2Title: "The future of digital artists in the era of generative AI.",
       trending3Tag: "#3 VOICES",
       trending3Title: "In Conversation: Independent art between local identity & global impact.",
-      editorsPicks: "EDITOR'S PICKS",
-      newsletterTitle: "STAY IN THE LOOP",
+      newsletterTitle: "JOIN THE LYM GAZETTE",
       newsletterDesc: "Get curations of our best stories, interviews, and features delivered to your inbox every week.",
       subscribeBtn: "SUBSCRIBE",
+      subscribedSuccess: "Thank you for subscribing! Welcome to LYM.",
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
       timeRead: "min read",
+      like: "Like",
     },
   };
 
@@ -58,48 +71,54 @@ export default function Home() {
     setLang((prev) => (prev === "ar" ? "en" : "ar"));
   };
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() !== "") {
+      setSubscribed(true);
+      setEmail("");
+    }
+  };
+
+  const handleLike = (id: string) => {
+    setLikes((prev) => ({ ...prev, [id]: prev[id] + 1 }));
+  };
+
   return (
     <div
-      className={`min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-emerald-500 selection:text-black ${
+      className={`min-h-screen bg-[#EFECE6] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white ${
         t.dir === "rtl" ? "dir-rtl" : "dir-ltr"
       }`}
       dir={t.dir}
     >
-      {/* Top Banner Accent */}
-      <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500 w-full" />
-
       {/* 1. HEADER */}
-      <header className="border-b border-zinc-800/80 px-6 py-5 max-w-7xl mx-auto flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <span className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-2xl md:text-3xl font-black tracking-tighter uppercase font-mono">
-            YOUTH<span className="text-emerald-400">.</span>MAG
-          </span>
+      <header className="border-b-2 border-[#2B2825] px-6 py-6 max-w-7xl mx-auto flex justify-between items-center bg-[#EFECE6]">
+        <div className="flex items-center gap-3 cursor-pointer group">
+          <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#DCD7CE] group-hover:bg-[#7A2821] group-hover:text-white transition-all">
+            LYM
+          </div>
+          <div>
+            <h1 className="text-2xl md:text-4xl font-black tracking-widest uppercase font-serif leading-none">
+              YOUTH MAG
+            </h1>
+            <span className="text-[10px] uppercase font-sans tracking-widest text-[#6B655F]">
+              Create • Connect • Empower
+            </span>
+          </div>
         </div>
 
-        <div className="flex gap-5 items-center text-xs md:text-sm font-medium">
+        <div className="flex gap-4 items-center text-xs md:text-sm font-sans font-bold">
           <a
             href="https://www.instagram.com/liby.anyouth"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5"
+            className="hover:text-[#7A2821] transition-colors underline underline-offset-4 decoration-1"
           >
-            <span>Instagram</span>
-            <svg
-              className={`w-3.5 h-3.5 ${t.dir === "rtl" ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+            Instagram
           </a>
-
-          <div className="h-4 w-[1px] bg-zinc-800" />
 
           <button
             onClick={toggleLanguage}
-            className="border border-zinc-700 bg-zinc-900/80 hover:bg-zinc-800 px-4 py-1.5 rounded-full text-xs text-white transition-all font-mono font-semibold hover:border-zinc-500 active:scale-95"
+            className="border-2 border-[#2B2825] px-4 py-1 bg-[#E8E3D9] hover:bg-[#2B2825] hover:text-white transition-all font-sans font-bold shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
           >
             {t.btnText}
           </button>
@@ -107,16 +126,20 @@ export default function Home() {
       </header>
 
       {/* 2. NAVIGATION */}
-      <nav className="border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
+      <nav className="border-b-2 border-[#2B2825] bg-[#E8E3D9] sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4">
-          <ul className="flex justify-start md:justify-center gap-6 md:gap-10 text-xs font-mono font-bold tracking-widest text-zinc-400 overflow-x-auto py-3.5 scrollbar-none">
+          <ul className="flex justify-start md:justify-center gap-6 md:gap-8 text-xs font-sans font-black tracking-widest text-[#4A4540] overflow-x-auto py-3">
             {t.nav.map((item, index) => (
               <li
                 key={index}
-                className="hover:text-emerald-400 cursor-pointer transition-colors whitespace-nowrap uppercase relative group py-0.5"
+                onClick={() => setActiveTab(index)}
+                className={`cursor-pointer transition-all whitespace-nowrap uppercase px-3 py-1 border border-transparent ${
+                  activeTab === index
+                    ? "bg-[#2B2825] text-[#EFECE6] font-bold"
+                    : "hover:border-[#2B2825] hover:text-[#7A2821]"
+                }`}
               >
                 {item}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-emerald-400 transition-all duration-300 group-hover:w-full" />
               </li>
             ))}
           </ul>
@@ -124,83 +147,91 @@ export default function Home() {
       </nav>
 
       {/* MAIN CONTENT */}
-      <main className="max-w-7xl mx-auto px-6 py-10 space-y-20">
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
         {/* 3. HERO SECTION */}
-        <section className="relative rounded-3xl overflow-hidden bg-gradient-to-b from-zinc-900 to-zinc-950 border border-zinc-800/80 grid md:grid-cols-12 gap-8 items-center p-6 md:p-10 shadow-2xl">
-          <div className="md:col-span-7 space-y-6 z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+        <section className="border-2 border-[#2B2825] bg-[#F5F2EC] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-7 space-y-5">
+            <span className="inline-block px-3 py-1 border border-[#2B2825] bg-[#E8E3D9] text-[#7A2821] text-xs font-sans font-bold uppercase tracking-wider">
               {t.heroCategory}
-            </div>
+            </span>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight leading-[1.1] text-balance">
+            <h2 className="text-3xl md:text-5xl font-black leading-tight tracking-tight text-[#1A1816]">
               {t.heroTitle}
-            </h1>
+            </h2>
 
-            <p className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-[#524D46] text-base leading-relaxed font-serif">
               {t.heroDesc}
             </p>
 
             <div className="pt-2 flex items-center gap-4">
-              <button className="group bg-emerald-400 hover:bg-emerald-300 text-black font-bold px-7 py-3.5 rounded-2xl transition-all duration-300 flex items-center gap-3 text-sm shadow-lg shadow-emerald-500/10 active:scale-95">
-                <span>{t.readStory}</span>
-                <svg
-                  className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    t.dir === "rtl" ? "rotate-180 group-hover:-translate-x-1" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+              <button
+                onClick={() => setActiveStory(t.heroTitle)}
+                className="bg-[#2B2825] text-white font-sans font-bold px-6 py-3 border-2 border-[#2B2825] hover:bg-[#7A2821] transition-all text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#7A2821] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+              >
+                {t.readStory}
               </button>
-              <span className="text-xs font-mono text-zinc-500">5 {t.timeRead}</span>
+              <span className="text-xs font-sans font-semibold text-[#78726A]">
+                5 {t.timeRead}
+              </span>
             </div>
           </div>
 
-          <div className="md:col-span-5 relative h-80 md:h-[420px] rounded-2xl overflow-hidden border border-zinc-800 group">
+          <div
+            onClick={() => setActiveStory(t.heroTitle)}
+            className="md:col-span-5 relative h-80 border-2 border-[#2B2825] overflow-hidden group cursor-pointer shadow-[4px_4px_0px_0px_#2B2825]"
+          >
             <img
               src="/hero.jpg.jpeg"
-              alt="Hero Cover"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              alt="Cover Image"
+              className="w-full h-full object-cover filter contrast-[105%] sepia-[15%] group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-[#2B2825]/10 group-hover:bg-transparent transition-colors" />
           </div>
         </section>
 
         {/* 4. TRENDING SECTION */}
-        <section className="space-y-8">
-          <div className="flex items-center gap-3 border-b border-zinc-800 pb-4">
-            <div className="w-1.5 h-6 bg-emerald-400 rounded-full" />
-            <h2 className="text-xl md:text-2xl font-extrabold tracking-tight font-mono">
+        <section className="space-y-6">
+          <div className="border-b-2 border-[#2B2825] pb-2 flex justify-between items-end">
+            <h3 className="text-xl md:text-2xl font-black font-sans uppercase tracking-wider text-[#2B2825]">
               {t.trendingTitle}
-            </h2>
+            </h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { tag: t.trending1Tag, title: t.trending1Title, date: "May 12" },
-              { tag: t.trending2Tag, title: t.trending2Title, date: "May 10" },
-              { tag: t.trending3Tag, title: t.trending3Title, date: "May 08" },
-            ].map((item, idx) => (
+              { id: "trending1", tag: t.trending1Tag, title: t.trending1Title },
+              { id: "trending2", tag: t.trending2Tag, title: t.trending2Title },
+              { id: "trending3", tag: t.trending3Tag, title: t.trending3Title },
+            ].map((item) => (
               <article
-                key={idx}
-                className="group relative bg-zinc-900/40 hover:bg-zinc-900/90 border border-zinc-800/80 hover:border-zinc-700 p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between space-y-4"
+                key={item.id}
+                className="border-2 border-[#2B2825] bg-[#F5F2EC] p-5 shadow-[4px_4px_0px_0px_#2B2825] hover:-translate-y-1 transition-all flex flex-col justify-between space-y-4"
               >
-                <div className="space-y-3">
-                  <span className="text-xs font-mono font-bold text-emerald-400 block">
+                <div
+                  className="space-y-2 cursor-pointer"
+                  onClick={() => setActiveStory(item.title)}
+                >
+                  <span className="text-xs font-sans font-bold text-[#7A2821] block">
                     {item.tag}
                   </span>
-                  <h3 className="font-bold text-lg leading-snug group-hover:text-white transition-colors">
+                  <h4 className="font-bold text-lg leading-snug hover:underline">
                     {item.title}
-                  </h3>
+                  </h4>
                 </div>
-                <div className="flex justify-between items-center pt-4 border-t border-zinc-800/50 text-xs font-mono text-zinc-500">
-                  <span>{item.date}</span>
-                  <span className="group-hover:translate-x-1 transition-transform text-zinc-400">
+
+                <div className="flex justify-between items-center pt-3 border-t border-[#DCD7CE] text-xs font-sans">
+                  <button
+                    onClick={() => handleLike(item.id)}
+                    className="flex items-center gap-1 text-[#7A2821] hover:bg-[#E8E3D9] px-2 py-1 rounded transition-colors font-bold"
+                  >
+                    ♥ {likes[item.id]} {t.like}
+                  </button>
+                  <button
+                    onClick={() => setActiveStory(item.title)}
+                    className="font-bold hover:text-[#7A2821]"
+                  >
                     →
-                  </span>
+                  </button>
                 </div>
               </article>
             ))}
@@ -208,36 +239,69 @@ export default function Home() {
         </section>
 
         {/* 5. NEWSLETTER SECTION */}
-        <section className="relative rounded-3xl bg-zinc-900/80 border border-zinc-800 p-8 md:p-12 overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="max-w-2xl mx-auto text-center space-y-6 relative z-10">
-            <h2 className="text-2xl md:text-4xl font-black tracking-tight">
-              {t.newsletterTitle}
-            </h2>
-            <p className="text-zinc-400 text-sm md:text-base">
-              {t.newsletterDesc}
-            </p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 pt-2">
+        <section className="border-2 border-[#2B2825] bg-[#E8E3D9] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
+          <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
+            {t.newsletterTitle}
+          </h3>
+          <p className="text-xs md:text-sm text-[#524D46] max-w-lg mx-auto font-sans">
+            {t.newsletterDesc}
+          </p>
+
+          {subscribed ? (
+            <div className="p-4 border-2 border-[#2B2825] bg-[#7A2821] text-white font-sans font-bold text-sm animate-fade-in max-w-md mx-auto">
+              {t.subscribedSuccess}
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
               <input
                 type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.placeholderEmail}
-                className="bg-zinc-950 border border-zinc-800 focus:border-emerald-400 text-white placeholder-zinc-500 px-5 py-3.5 rounded-xl flex-1 text-sm outline-none transition-colors"
+                className="border-2 border-[#2B2825] px-4 py-2.5 bg-white text-[#2B2825] placeholder-[#8C857B] font-sans text-xs flex-1 outline-none focus:bg-[#FFFDF9]"
               />
               <button
                 type="submit"
-                className="bg-zinc-100 hover:bg-white text-black font-bold px-7 py-3.5 rounded-xl transition-all text-sm whitespace-nowrap active:scale-95"
+                className="bg-[#7A2821] text-white font-sans font-bold px-6 py-2.5 border-2 border-[#2B2825] hover:bg-[#2B2825] transition-all text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#2B2825] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
               >
                 {t.subscribeBtn}
               </button>
             </form>
-          </div>
+          )}
         </section>
       </main>
 
+      {/* 6. MODAL POPUP FOR READING STORIES */}
+      {activeStory && (
+        <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#EFECE6] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative animate-scale-up">
+            <button
+              onClick={() => setActiveStory(null)}
+              className="absolute top-4 right-4 text-xl font-bold font-sans border-2 border-[#2B2825] w-8 h-8 flex items-center justify-center hover:bg-[#7A2821] hover:text-white transition-colors"
+            >
+              ✕
+            </button>
+            <span className="text-xs font-sans font-bold text-[#7A2821] block uppercase">
+              LYM Special Feature
+            </span>
+            <h3 className="text-2xl font-black font-serif">{activeStory}</h3>
+            <p className="text-sm leading-relaxed text-[#4A4540]">
+              هذا النص تجريبي لعرض المقال المختار كاملاً داخل نافذة تفاعلية. يمكن ربطه لاحقاً بأي قاعدة بيانات أو مقالات حقيقية.
+            </p>
+            <button
+              onClick={() => setActiveStory(null)}
+              className="bg-[#2B2825] text-white text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821]"
+            >
+              إغلاق
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* FOOTER */}
-      <footer className="border-t border-zinc-900 bg-zinc-950 py-10 text-center text-xs text-zinc-500 font-mono">
-        <p>© {new Date().getFullYear()} YOUTH MAG. ALL RIGHTS RESERVED.</p>
+      <footer className="border-t-2 border-[#2B2825] bg-[#E8E3D9] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
+        <p>© {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.</p>
       </footer>
     </div>
   );
