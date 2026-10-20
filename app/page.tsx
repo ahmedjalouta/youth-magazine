@@ -247,7 +247,52 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. NEWSLETTER SECTION */}
+        {/* 5. DIGITAL MAGAZINE SECTION */}
+        <section className="space-y-6">
+          <div className="border-b-2 border-[#2B2825] pb-3 flex justify-between items-end gap-4">
+            <div>
+              <span className="text-xs font-sans font-bold tracking-widest text-[#7A2821]">
+                LYM • DIGITAL EDITION
+              </span>
+              <h3 className="text-2xl md:text-3xl font-black font-serif uppercase tracking-wide text-[#2B2825] mt-2">
+                {lang === "ar" ? "مجلة الشباب" : "THE MAGAZINE"}
+              </h3>
+              <p className="text-sm text-[#524D46] mt-2">
+                {lang === "ar"
+                  ? "اكتشف العدد وتصفح صفحات المجلة الرقمية."
+                  : "Discover our latest issue and explore every page."}
+              </p>
+            </div>
+
+            <a
+              href="https://heyzine.com/flip-book/81bf004084.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 text-xs font-sans font-bold uppercase tracking-wide border-2 border-[#2B2825] px-4 py-3 bg-[#D5CDBF] hover:bg-[#7A2821] hover:text-white transition-colors"
+            >
+              {lang === "ar" ? "فتح المجلة ↗" : "OPEN MAGAZINE ↗"}
+            </a>
+          </div>
+
+          <div className="border-2 border-[#2B2825] bg-[#DFD7C8] p-2 md:p-3 shadow-[6px_6px_0px_0px_#2B2825]">
+            <iframe
+              src="https://heyzine.com/flip-book/81bf004084.html"
+              title="Libyan Youth Magazine Digital Edition"
+              allow="autoplay; fullscreen; clipboard-write"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-[480px] md:h-[700px] border-0 bg-[#EAE4D9]"
+            />
+          </div>
+
+          <p className="text-xs text-[#6B655F] font-sans text-center">
+            {lang === "ar"
+              ? "اقلب الصفحات واستمتع بقراءة العدد الرقمي."
+              : "Flip through the pages and enjoy our digital edition."}
+          </p>
+        </section>
+
+        {/* 6. NEWSLETTER SECTION */}
         <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
             {t.newsletterTitle}
@@ -286,7 +331,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 6. MODAL POPUP FOR READING STORIES */}
+      {/* 7. MODAL POPUP FOR READING STORIES */}
       {activeStory && (
         <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative">
