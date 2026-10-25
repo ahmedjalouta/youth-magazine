@@ -251,7 +251,53 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. NEWSLETTER SECTION */}
+        {/* 5. LYM DIGITAL MAGAZINE */}
+        <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] space-y-5">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#7A2821]">
+                LYM • DIGITAL EDITION
+              </span>
+              <h3 className="text-2xl md:text-3xl font-black mt-2 text-[#2B2825]">
+                {lang === "ar" ? "مجلة الشباب الليبي" : "LIBYAN YOUTH MAGAZINE"}
+              </h3>
+              <p className="text-sm mt-2 text-[#524D46]">
+                {lang === "ar"
+                  ? "اقرأ العدد الجديد مباشرة من موقعنا."
+                  : "Read our latest issue directly on our website."}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/LYM_Magazine_Combined_Compressed.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#2B2825] text-[#EAE4D9] px-5 py-3 text-xs font-sans font-bold hover:bg-[#7A2821] transition-colors"
+              >
+                {lang === "ar" ? "افتح المجلة ↗" : "OPEN MAGAZINE ↗"}
+              </a>
+
+              <a
+                href="/LYM_Magazine_Combined_Compressed.pdf"
+                download
+                className="border-2 border-[#2B2825] px-5 py-3 text-xs font-sans font-bold hover:bg-[#D5CDBF] transition-colors"
+              >
+                {lang === "ar" ? "تحميل PDF ↓" : "DOWNLOAD PDF ↓"}
+              </a>
+            </div>
+          </div>
+
+          <div className="border-2 border-[#2B2825] bg-white overflow-hidden">
+            <iframe
+              src="/LYM_Magazine_Combined_Compressed.pdf"
+              title="LYM Digital Magazine"
+              className="w-full h-[650px] md:h-[850px]"
+            />
+          </div>
+        </section>
+
+        {/* 6. NEWSLETTER SECTION */}
         <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
             {t.newsletterTitle}
@@ -290,7 +336,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 6. MODAL POPUP FOR READING STORIES */}
+      {/* 7. MODAL POPUP FOR READING STORIES */}
       {activeStory && (
         <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative">
@@ -317,7 +363,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* FOOTER */}
+      {/* 8. FOOTER */}
       <footer className="border-t-2 border-[#2B2825] bg-[#D5CDBF] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
         <p>© {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.</p>
       </footer>
