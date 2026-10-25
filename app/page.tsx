@@ -41,6 +41,9 @@ export default function Home() {
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
       timeRead: "دقائق قراءة",
+      modalExcerpt: "هذا النص تجريبي لعرض المقال المختار كاملاً داخل نافذة تفاعلية. يمكن ربطه لاحقاً بأي قاعدة بيانات أو مقالات حقيقية.",
+      closeBtn: "إغلاق",
+      badge: "مقال مميز • LYM"
     },
     en: {
       dir: "ltr",
@@ -64,6 +67,9 @@ export default function Home() {
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
       timeRead: "min read",
+      modalExcerpt: "This is a preview text for the selected article inside an interactive modal. It can be easily connected to a CMS or database later.",
+      closeBtn: "Close",
+      badge: "LYM Special Feature"
     },
   };
 
@@ -105,9 +111,7 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen bg-[#EAE4D9] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white ${
-        t.dir === "rtl" ? "dir-rtl" : "dir-ltr"
-      }`}
+      className="min-h-screen bg-[#EAE4D9] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white"
       dir={t.dir}
     >
       {/* 1. HEADER */}
@@ -297,17 +301,17 @@ export default function Home() {
               ✕
             </button>
             <span className="text-xs font-sans font-bold text-[#7A2821] block uppercase">
-              LYM Special Feature
+              {t.badge}
             </span>
             <h3 className="text-2xl font-black font-serif text-[#2B2825]">{activeStory}</h3>
             <p className="text-sm leading-relaxed text-[#4A4540]">
-              هذا النص تجريبي لعرض المقال المختار كاملاً داخل نافذة تفاعلية. يمكن ربطه لاحقاً بأي قاعدة بيانات أو مقالات حقيقية.
+              {t.modalExcerpt}
             </p>
             <button
               onClick={() => setActiveStory(null)}
               className="bg-[#2B2825] text-[#EAE4D9] text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821] hover:text-white"
             >
-              إغلاق
+              {t.closeBtn}
             </button>
           </div>
         </div>
