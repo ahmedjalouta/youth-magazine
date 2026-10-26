@@ -54,7 +54,7 @@ export default function Home() {
       dir: "ltr",
       nav: ["NEWS", "CULTURE", "FASHION", "TECH", "LIFESTYLE", "SPORTS", "OPINIONS"],
       heroCategory: "LYM • COVER STORY",
-      heroTitle: "FROM YOUTH TO YOUTH: SHAPING THE NEXT GENERATION",
+      heroTitle: "FROM YOUTH TO YOUTH: Amal Magazine",
       heroDesc: "An independent media platform echoing vintage editorial vibes with contemporary youth perspectives.",
       readStory: "READ FULL STORY",
       trendingTitle: "TRENDING STORIES",
@@ -97,7 +97,7 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://formspree.io/f/moevywbb", {
+      const response = await fetch("c:\Users\godgo\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\535DB07436197C791950EF863D23109D082C3CD4\transfers\2026-43\WhatsApp Image 2026-10-26 at 2.24.09 AM.jpeg", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
