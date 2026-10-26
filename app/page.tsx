@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
-  
+
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,7 +80,9 @@ export default function Home() {
     setLang((prev) => (prev === "ar" ? "en" : "ar"));
   };
 
-  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     if (!email) return;
 
@@ -100,10 +103,18 @@ export default function Home() {
         localStorage.setItem("lym_subscribed", "true");
         setEmail("");
       } else {
-        alert(lang === "ar" ? "حدث خطأ أثناء الإرسال. يرجى التثبت من البريد والمحاولة مجدداً." : "Failed to subscribe. Please try again.");
+        alert(
+          lang === "ar"
+            ? "حدث خطأ أثناء الإرسال. يرجى التثبت من البريد والمحاولة مجدداً."
+            : "Failed to subscribe. Please try again."
+        );
       }
-    } catch (error) {
-      alert(lang === "ar" ? "تعذر الاتصال بالخادم." : "Network error. Please try again.");
+    } catch {
+      alert(
+        lang === "ar"
+          ? "تعذر الاتصال بالخادم."
+          : "Network error. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -120,6 +131,7 @@ export default function Home() {
           <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#D5CDBF] group-hover:bg-[#7A2821] group-hover:text-white transition-all">
             LYM
           </div>
+
           <div>
             <h1 className="text-2xl md:text-4xl font-black tracking-widest uppercase font-serif leading-none text-[#2B2825]">
               YOUTH MAG
@@ -170,7 +182,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */} 
+      {/* MAIN CONTENT */}
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
         {/* 3. HERO SECTION */}
         <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
@@ -194,6 +206,7 @@ export default function Home() {
               >
                 {t.readStory}
               </button>
+
               <span className="text-xs font-sans font-semibold text-[#78726A]">
                 5 {t.timeRead}
               </span>
@@ -223,9 +236,21 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { id: "trending1", tag: t.trending1Tag, title: t.trending1Title },
-              { id: "trending2", tag: t.trending2Tag, title: t.trending2Title },
-              { id: "trending3", tag: t.trending3Tag, title: t.trending3Title },
+              {
+                id: "trending1",
+                tag: t.trending1Tag,
+                title: t.trending1Title,
+              },
+              {
+                id: "trending2",
+                tag: t.trending2Tag,
+                title: t.trending2Title,
+              },
+              {
+                id: "trending3",
+                tag: t.trending3Tag,
+                title: t.trending3Title,
+              },
             ].map((item) => (
               <article
                 key={item.id}
@@ -236,6 +261,7 @@ export default function Home() {
                   <span className="text-xs font-sans font-bold text-[#7A2821] block">
                     {item.tag}
                   </span>
+
                   <h4 className="font-bold text-lg leading-snug hover:underline text-[#2B2825]">
                     {item.title}
                   </h4>
@@ -251,11 +277,58 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. NEWSLETTER SECTION */}
+        {/* 5. LYM DIGITAL MAGAZINE */}
+        <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] space-y-5">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#7A2821]">
+                LYM • DIGITAL EDITION
+              </span>
+
+              <h3 className="text-2xl md:text-3xl font-black mt-2 text-[#2B2825]">
+                {lang === "ar"
+                  ? "مجلة الشباب الليبي"
+                  : "LIBYAN YOUTH MAGAZINE"}
+              </h3>
+
+              <p className="text-sm mt-2 text-[#524D46]">
+                {lang === "ar"
+                  ? "تصفح العدد مباشرة واقلب الصفحات من داخل الموقع."
+                  : "Read the latest issue and flip through its pages right here."}
+              </p>
+            </div>
+
+            <a
+              href="https://heyzine.com/flip-book/7f55f44e9a.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#2B2825] text-[#EAE4D9] px-5 py-3 text-xs font-sans font-bold hover:bg-[#7A2821] transition-colors"
+            >
+              {lang === "ar"
+                ? "افتح المجلة في صفحة جديدة ↗"
+                : "OPEN FLIPBOOK ↗"}
+            </a>
+          </div>
+
+          <div className="border-2 border-[#2B2825] bg-white overflow-hidden">
+            <iframe
+              allowFullScreen
+              allow="autoplay; fullscreen; clipboard-write"
+              scrolling="no"
+              title="LYM Digital Magazine Flipbook"
+              src="https://heyzine.com/flip-book/7f55f44e9a.html"
+              className="w-full h-[400px] md:h-[650px]"
+              style={{ border: "1px solid lightgray" }}
+            />
+          </div>
+        </section>
+
+        {/* 6. NEWSLETTER SECTION */}
         <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black font-serif uppercase text-[#2B2825]">
             {t.newsletterTitle}
           </h3>
+
           <p className="text-xs md:text-sm text-[#524D46] max-w-lg mx-auto font-sans">
             {t.newsletterDesc}
           </p>
@@ -265,7 +338,7 @@ export default function Home() {
               {t.subscribedSuccess}
             </div>
           ) : (
-            <form 
+            <form
               onSubmit={handleNewsletterSubmit}
               className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2"
             >
@@ -278,6 +351,7 @@ export default function Home() {
                 placeholder={t.placeholderEmail}
                 className="border-2 border-[#2B2825] px-4 py-2.5 bg-[#EAE4D9] text-[#2B2825] placeholder-[#78726A] font-sans text-xs flex-1 outline-none focus:bg-[#F5F2EC]"
               />
+
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -290,7 +364,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 6. MODAL POPUP FOR READING STORIES */}
+      {/* 7. MODAL POPUP FOR READING STORIES */}
       {activeStory && (
         <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative">
@@ -300,13 +374,19 @@ export default function Home() {
             >
               ✕
             </button>
+
             <span className="text-xs font-sans font-bold text-[#7A2821] block uppercase">
               {t.badge}
             </span>
-            <h3 className="text-2xl font-black font-serif text-[#2B2825]">{activeStory}</h3>
+
+            <h3 className="text-2xl font-black font-serif text-[#2B2825]">
+              {activeStory}
+            </h3>
+
             <p className="text-sm leading-relaxed text-[#4A4540]">
               {t.modalExcerpt}
             </p>
+
             <button
               onClick={() => setActiveStory(null)}
               className="bg-[#2B2825] text-[#EAE4D9] text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821] hover:text-white"
@@ -317,9 +397,11 @@ export default function Home() {
         </div>
       )}
 
-      {/* FOOTER */}
+      {/* 8. FOOTER */}
       <footer className="border-t-2 border-[#2B2825] bg-[#D5CDBF] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
-        <p>© {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.</p>
+        <p>
+          © {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.
+        </p>
       </footer>
     </div>
   );
