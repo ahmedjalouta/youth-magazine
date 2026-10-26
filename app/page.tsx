@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [lang, setLang] = useState<"ar" | "en">("en");
@@ -10,8 +10,6 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [activeStory, setActiveStory] = useState<string | null>(null);
-
-  const magazineUrl = "https://heyzine.com/flip-book/7f55f44e9a.html";
 
   useEffect(() => {
     if (localStorage.getItem("lym_subscribed")) {
@@ -24,80 +22,73 @@ export default function Home() {
       dir: "rtl",
       nav: ["الأخبار", "الثقافة", "الموضة", "التكنولوجيا", "أسلوب الحياة", "الرياضة", "الآراء"],
       heroCategory: "LYM • غلاف العدد",
-      heroTitle: "من الشباب إلى الشباب: صياغة أسلوب جيل جديد",
-      heroDesc: "منصة إعلامية تمزج بين الأصالة التحريرية القديمة والرؤية الشبابية المعاصرة.",
-      readStory: "اقرأ القصة كاملة",
+      heroTitle: "من الشباب إلى الشباب: مجلة أمل",
+      heroDesc: "مجلة الشباب الليبي، مساحة للأفكار والإبداع والمواهب الشبابية.",
+      readStory: "اقرأ المجلة كاملة",
       trendingTitle: "الأكثر قراءة هذا الأسبوع",
       trending1Tag: "#1 الموضة المستدامة",
       trending1Title: "كيف يعيد المصممون الشباب تعريف عالم الأزياء؟",
       trending2Tag: "#2 الذكاء الاصطناعي",
-      trending2Title: "مستقبل صُنّاع المحتوى في عصر خوارزميات التوليد",
+      trending2Title: "مستقبل صناع المحتوى في عصر الذكاء الاصطناعي.",
       trending3Tag: "#3 أصوات شابة",
-      trending3Title: "حوار خاص: الفنون المستقلة بين الهوية والعالمية",
-      newsletterTitle: "اشترك في النشرة الرقمية",
-      newsletterDesc: "احصل على أحدث القصص والمقالات الحصرية أسبوعياً في صندوق بريدك.",
+      trending3Title: "الفنون المستقلة بين الهوية والتأثير العالمي.",
+      newsletterTitle: "اشترك في النشرة",
+      newsletterDesc: "احصل على أحدث القصص والمقالات في بريدك الإلكتروني.",
       subscribeBtn: "اشتراك",
       submittingBtn: "جاري الإرسال...",
-      subscribedSuccess: "شكراً لاشتراكك!",
+      subscribedSuccess: "تم الاشتراك بنجاح!",
       placeholderEmail: "أدخل بريدك الإلكتروني...",
       btnText: "EN",
       timeRead: "دقائق قراءة",
-      modalExcerpt: "هذا نص تعريفي بالمقال المختار. تابع مجلة الشباب الليبي لاكتشاف المزيد من القصص والمقالات.",
+      modalExcerpt: "تصفح العدد الرقمي لمجلة الشباب الليبي واقرأ محتواه عبر الموقع.",
       closeBtn: "إغلاق",
-      badge: "مقال مميز • LYM",
-      magazineTitle: "مجلة الشباب الليبي",
-      magazineDesc: "اكتشف العدد واقلب صفحات المجلة التفاعلية.",
-      openMagazine: "افتح المجلة ↗",
-      magazineLabel: "LYM • النسخة الرقمية",
+      badge: "مجلة أمل • LYM",
     },
     en: {
       dir: "ltr",
       nav: ["NEWS", "CULTURE", "FASHION", "TECH", "LIFESTYLE", "SPORTS", "OPINIONS"],
-      heroCategory: "LYM • COVER STORY",
+      heroCategory: "LYM • MAGAZINE COVER",
       heroTitle: "FROM YOUTH TO YOUTH: Amal Magazine",
-      heroDesc: "An independent media platform echoing vintage editorial vibes with contemporary youth perspectives.",
+      heroDesc: "An independent youth magazine celebrating ideas, creativity, and the voices of young Libyans.",
       readStory: "READ FULL STORY",
       trendingTitle: "TRENDING STORIES",
       trending1Tag: "#1 SUSTAINABLE FASHION",
-      trending1Title: "How young designers are reinventing streetwear and luxury.",
+      trending1Title: "How young designers are reinventing the world of fashion.",
       trending2Tag: "#2 AI & CREATIVITY",
-      trending2Title: "The future of digital artists in the era of generative AI.",
-      trending3Tag: "#3 VOICES",
-      trending3Title: "In Conversation: Independent art between local identity & global impact.",
+      trending2Title: "The future of content creators in the age of artificial intelligence.",
+      trending3Tag: "#3 YOUTH VOICES",
+      trending3Title: "Independent art between local identity and global impact.",
       newsletterTitle: "JOIN THE LYM GAZETTE",
-      newsletterDesc: "Get our best stories, interviews, and features delivered to your inbox every week.",
+      newsletterDesc: "Get our latest stories, interviews, and features delivered to your inbox.",
       subscribeBtn: "SUBSCRIBE",
       submittingBtn: "SENDING...",
       subscribedSuccess: "Thank you for subscribing!",
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
       timeRead: "min read",
-      modalExcerpt: "Discover stories, ideas, and perspectives from the Libyan Youth Magazine.",
+      modalExcerpt: "Explore the digital edition of Libyan Youth Magazine by opening the complete flipbook.",
       closeBtn: "Close",
-      badge: "LYM SPECIAL FEATURE",
-      magazineTitle: "LIBYAN YOUTH MAGAZINE",
-      magazineDesc: "Explore the issue and flip through the interactive magazine.",
-      openMagazine: "OPEN MAGAZINE ↗",
-      magazineLabel: "LYM • DIGITAL EDITION",
+      badge: "Amal Magazine • LYM",
     },
   };
 
   const t = content[lang];
+  const magazineUrl = "https://heyzine.com/flip-book/7f55f44e9a.html";
 
   const toggleLanguage = () => {
     setLang((prev) => (prev === "ar" ? "en" : "ar"));
   };
 
   const handleNewsletterSubmit = async (
-    e: FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email) return;
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("c:\Users\godgo\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\535DB07436197C791950EF863D23109D082C3CD4\transfers\2026-43\WhatsApp Image 2026-10-26 at 2.24.09 AM.jpeg", {
+      const response = await fetch("https://formspree.io/f/moevywbb", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,14 +105,14 @@ export default function Home() {
         alert(
           lang === "ar"
             ? "تعذر الاشتراك. حاول مرة أخرى."
-            : "Unable to subscribe. Please try again."
+            : "Failed to subscribe. Please try again."
         );
       }
     } catch {
       alert(
         lang === "ar"
-          ? "تعذر الاتصال. تحقق من الإنترنت وحاول مجدداً."
-          : "Connection failed. Please check your internet and try again."
+          ? "تعذر الاتصال بالخادم."
+          : "Network error. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -131,15 +122,14 @@ export default function Home() {
   return (
     <div
       dir={t.dir}
-      className="min-h-screen bg-[#EAE4D9] text-[#2B2825] font-serif transition-colors duration-300 selection:bg-[#7A2821] selection:text-white"
+      className="min-h-screen bg-[#EAE4D9] text-[#2B2825] font-serif selection:bg-[#7A2821] selection:text-white"
     >
-      {/* 1. HEADER */}
+      {/* HEADER */}
       <header className="border-b-2 border-[#2B2825] px-6 py-6 max-w-7xl mx-auto flex justify-between items-center bg-[#EAE4D9]">
-        <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#D5CDBF] group-hover:bg-[#7A2821] group-hover:text-white transition-all">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 border-2 border-[#2B2825] rounded-full flex items-center justify-center font-bold text-xs bg-[#D5CDBF]">
             LYM
           </div>
-
           <div>
             <h1 className="text-2xl md:text-4xl font-black tracking-widest uppercase leading-none">
               YOUTH MAG
@@ -155,31 +145,31 @@ export default function Home() {
             href="https://www.instagram.com/liby.anyouth"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#7A2821] transition-colors underline underline-offset-4"
+            className="hover:text-[#7A2821] underline underline-offset-4"
           >
             Instagram
           </a>
 
           <button
             onClick={toggleLanguage}
-            className="border-2 border-[#2B2825] px-4 py-1 bg-[#D5CDBF] hover:bg-[#2B2825] hover:text-[#EAE4D9] transition-all font-sans font-bold shadow-[2px_2px_0px_0px_#2B2825]"
+            className="border-2 border-[#2B2825] px-4 py-1 bg-[#D5CDBF] hover:bg-[#2B2825] hover:text-white"
           >
             {t.btnText}
           </button>
         </div>
       </header>
 
-      {/* 2. NAVIGATION */}
+      {/* NAVIGATION */}
       <nav className="border-b-2 border-[#2B2825] bg-[#D5CDBF] sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4">
-          <ul className="flex justify-start md:justify-center gap-6 md:gap-8 text-xs font-sans font-black tracking-widest text-[#4A4540] overflow-x-auto py-3">
+          <ul className="flex justify-start md:justify-center gap-6 md:gap-8 text-xs font-sans font-black tracking-widest overflow-x-auto py-3">
             {t.nav.map((item, index) => (
               <li
-                key={index}
+                key={item}
                 onClick={() => setActiveTab(index)}
-                className={`cursor-pointer transition-all whitespace-nowrap uppercase px-3 py-1 border border-transparent ${
+                className={`cursor-pointer whitespace-nowrap uppercase px-3 py-1 border border-transparent ${
                   activeTab === index
-                    ? "bg-[#2B2825] text-[#EAE4D9] font-bold"
+                    ? "bg-[#2B2825] text-[#EAE4D9]"
                     : "hover:border-[#2B2825] hover:text-[#7A2821]"
                 }`}
               >
@@ -190,9 +180,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
-        {/* 3. HERO / MAGAZINE COVER */}
+        {/* HERO */}
         <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] grid md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-7 space-y-5">
             <span className="inline-block px-3 py-1 border border-[#2B2825] bg-[#D5CDBF] text-[#7A2821] text-xs font-sans font-bold uppercase tracking-wider">
@@ -208,12 +197,11 @@ export default function Home() {
             </p>
 
             <div className="pt-2 flex items-center gap-4">
-              {/* Clicking this button opens the interactive magazine */}
               <a
                 href={magazineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#2B2825] text-[#EAE4D9] font-sans font-bold px-6 py-3 border-2 border-[#2B2825] hover:bg-[#7A2821] hover:text-white transition-all text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#7A2821] inline-block"
+                className="inline-block bg-[#2B2825] text-[#EAE4D9] font-sans font-bold px-6 py-3 border-2 border-[#2B2825] hover:bg-[#7A2821] transition-all text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#7A2821]"
               >
                 {t.readStory}
               </a>
@@ -224,19 +212,25 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Keep the magazine cover image in the square */}
-          <div className="md:col-span-5 relative h-80 border-2 border-[#2B2825] overflow-hidden shadow-[4px_4px_0px_0px_#2B2825]">
+          {/* MAGAZINE COVER IMAGE */}
+          <a
+            href={magazineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Amal Magazine"
+            className="md:col-span-5 relative aspect-square w-full border-2 border-[#2B2825] overflow-hidden group cursor-pointer shadow-[4px_4px_0px_0px_#2B2825]"
+          >
             <img
-              src="/hero.jpg.jpeg"
-              alt="LYM Magazine Cover"
-              className="w-full h-full object-cover filter contrast-[105%] sepia-[15%]"
+              src="/lym-cover.jpg"
+              alt="FROM YOUTH TO YOUTH: Amal Magazine cover"
+              className="w-full h-full object-contain bg-[#EAE4D9] group-hover:scale-[1.02] transition-transform duration-500"
             />
-          </div>
+          </a>
         </section>
 
-        {/* 4. TRENDING STORIES */}
+        {/* TRENDING STORIES */}
         <section className="space-y-6">
-          <div className="border-b-2 border-[#2B2825] pb-2 flex justify-between items-end">
+          <div className="border-b-2 border-[#2B2825] pb-2">
             <h3 className="text-xl md:text-2xl font-black font-sans uppercase tracking-wider">
               {t.trendingTitle}
             </h3>
@@ -244,21 +238,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                id: "trending1",
-                tag: t.trending1Tag,
-                title: t.trending1Title,
-              },
-              {
-                id: "trending2",
-                tag: t.trending2Tag,
-                title: t.trending2Title,
-              },
-              {
-                id: "trending3",
-                tag: t.trending3Tag,
-                title: t.trending3Title,
-              },
+              { id: "trending1", tag: t.trending1Tag, title: t.trending1Title },
+              { id: "trending2", tag: t.trending2Tag, title: t.trending2Title },
+              { id: "trending3", tag: t.trending3Tag, title: t.trending3Title },
             ].map((item) => (
               <article
                 key={item.id}
@@ -269,36 +251,45 @@ export default function Home() {
                   <span className="text-xs font-sans font-bold text-[#7A2821] block">
                     {item.tag}
                   </span>
-
                   <h4 className="font-bold text-lg leading-snug hover:underline">
                     {item.title}
                   </h4>
                 </div>
 
                 <div className="flex justify-end items-center pt-3 border-t border-[#C3B9A8] text-xs font-sans">
-                  <span className="font-bold hover:text-[#7A2821] transition-colors">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveStory(item.title);
+                    }}
+                    className="font-bold hover:text-[#7A2821]"
+                  >
                     {t.readStory} →
-                  </span>
+                  </button>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* 5. INTERACTIVE MAGAZINE SECTION */}
+        {/* DIGITAL MAGAZINE */}
         <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] space-y-5">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#7A2821]">
-                {t.magazineLabel}
+                LYM • DIGITAL EDITION
               </span>
 
               <h3 className="text-2xl md:text-3xl font-black mt-2">
-                {t.magazineTitle}
+                {lang === "ar"
+                  ? "مجلة الشباب الليبي"
+                  : "LIBYAN YOUTH MAGAZINE"}
               </h3>
 
               <p className="text-sm mt-2 text-[#524D46]">
-                {t.magazineDesc}
+                {lang === "ar"
+                  ? "تصفح العدد مباشرة واقلب الصفحات من داخل الموقع."
+                  : "Read the latest issue and flip through its pages right here."}
               </p>
             </div>
 
@@ -306,26 +297,26 @@ export default function Home() {
               href={magazineUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#2B2825] text-[#EAE4D9] px-5 py-3 text-xs font-sans font-bold hover:bg-[#7A2821] transition-colors"
+              className="bg-[#2B2825] text-[#EAE4D9] px-5 py-3 text-xs font-sans font-bold hover:bg-[#7A2821]"
             >
-              {t.openMagazine}
+              {lang === "ar" ? "افتح المجلة في صفحة جديدة ↗" : "OPEN FLIPBOOK ↗"}
             </a>
           </div>
 
           <div className="border-2 border-[#2B2825] bg-white overflow-hidden">
             <iframe
-              src={magazineUrl}
-              title="LYM Interactive Magazine"
               allowFullScreen
               allow="autoplay; fullscreen; clipboard-write"
               scrolling="no"
+              title="LYM Digital Magazine Flipbook"
+              src={magazineUrl}
               className="w-full h-[400px] md:h-[650px]"
-              style={{ border: 0 }}
+              style={{ border: "1px solid lightgray" }}
             />
           </div>
         </section>
 
-        {/* 6. NEWSLETTER */}
+        {/* NEWSLETTER */}
         <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black uppercase">
             {t.newsletterTitle}
@@ -366,20 +357,14 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 7. ARTICLE MODAL */}
+      {/* ARTICLE PREVIEW MODAL */}
       {activeStory && (
-        <div
-          className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setActiveStory(null)}
-        >
-          <div
-            className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 bg-[#2B2825]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#EAE4D9] border-4 border-[#2B2825] max-w-2xl w-full p-6 md:p-8 shadow-[8px_8px_0px_0px_#2B2825] space-y-4 relative">
             <button
               onClick={() => setActiveStory(null)}
-              aria-label={t.closeBtn}
-              className="absolute top-4 right-4 text-xl font-bold border-2 border-[#2B2825] w-8 h-8 flex items-center justify-center hover:bg-[#7A2821] hover:text-white transition-colors"
+              aria-label="Close dialog"
+              className="absolute top-4 right-4 text-xl font-bold border-2 border-[#2B2825] w-8 h-8 flex items-center justify-center hover:bg-[#7A2821] hover:text-white"
             >
               ✕
             </button>
@@ -398,22 +383,15 @@ export default function Home() {
               href={magazineUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-[#2B2825] text-[#EAE4D9] text-xs font-sans font-bold px-5 py-3 hover:bg-[#7A2821]"
+              className="inline-block bg-[#2B2825] text-[#EAE4D9] text-xs font-sans font-bold px-5 py-2.5 border-2 border-[#2B2825] hover:bg-[#7A2821]"
             >
-              {t.openMagazine}
+              {t.readStory}
             </a>
-
-            <button
-              onClick={() => setActiveStory(null)}
-              className="block border-2 border-[#2B2825] text-xs font-sans font-bold px-5 py-2.5 hover:bg-[#D5CDBF]"
-            >
-              {t.closeBtn}
-            </button>
           </div>
         </div>
       )}
 
-      {/* 8. FOOTER */}
+      {/* FOOTER */}
       <footer className="border-t-2 border-[#2B2825] bg-[#D5CDBF] py-8 text-center text-xs text-[#6B655F] font-sans font-bold">
         <p>
           © {new Date().getFullYear()} LYM - LIBYAN YOUTH MAGAZINE. ALL RIGHTS RESERVED.
