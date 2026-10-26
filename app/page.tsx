@@ -221,7 +221,7 @@ export default function Home() {
             className="md:col-span-5 relative aspect-square w-full border-2 border-[#2B2825] overflow-hidden group cursor-pointer shadow-[4px_4px_0px_0px_#2B2825]"
           >
             <img
-              src="/lym-cover.jpg"
+              src="/lym-cover.jpg.jpeg"
               alt="FROM YOUTH TO YOUTH: Amal Magazine cover"
               className="w-full h-full object-contain bg-[#EAE4D9] group-hover:scale-[1.02] transition-transform duration-500"
             />
