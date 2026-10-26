@@ -272,50 +272,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* DIGITAL MAGAZINE */}
-        <section className="border-2 border-[#2B2825] bg-[#DFD7C8] p-6 md:p-8 shadow-[6px_6px_0px_0px_#2B2825] space-y-5">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#7A2821]">
-                LYM • DIGITAL EDITION
-              </span>
-
-              <h3 className="text-2xl md:text-3xl font-black mt-2">
-                {lang === "ar"
-                  ? "مجلة الشباب الليبي"
-                  : "LIBYAN YOUTH MAGAZINE"}
-              </h3>
-
-              <p className="text-sm mt-2 text-[#524D46]">
-                {lang === "ar"
-                  ? "تصفح العدد مباشرة واقلب الصفحات من داخل الموقع."
-                  : "Read the latest issue and flip through its pages right here."}
-              </p>
-            </div>
-
-            <a
-              href={magazineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#2B2825] text-[#EAE4D9] px-5 py-3 text-xs font-sans font-bold hover:bg-[#7A2821]"
-            >
-              {lang === "ar" ? "افتح المجلة في صفحة جديدة ↗" : "OPEN FLIPBOOK ↗"}
-            </a>
-          </div>
-
-          <div className="border-2 border-[#2B2825] bg-white overflow-hidden">
-            <iframe
-              allowFullScreen
-              allow="autoplay; fullscreen; clipboard-write"
-              scrolling="no"
-              title="LYM Digital Magazine Flipbook"
-              src={magazineUrl}
-              className="w-full h-[400px] md:h-[650px]"
-              style={{ border: "1px solid lightgray" }}
-            />
-          </div>
-        </section>
-
         {/* NEWSLETTER */}
         <section className="border-2 border-[#2B2825] bg-[#D5CDBF] p-8 md:p-10 text-center space-y-4 shadow-[6px_6px_0px_0px_#2B2825]">
           <h3 className="text-2xl md:text-3xl font-black uppercase">
