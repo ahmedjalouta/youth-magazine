@@ -65,7 +65,7 @@ export default function Home() {
       subscribedSuccess: "Thank you for subscribing!",
       placeholderEmail: "Enter your email...",
       btnText: "عربي",
-      timeRead: "10 - 15min read",
+      timeRead: " - 15min read",
       modalExcerpt: "Explore the digital edition of Libyan Youth Magazine by opening the complete flipbook.",
       closeBtn: "Close",
       badge: "Amal Magazine • LYM",
